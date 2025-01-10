@@ -1,19 +1,23 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useForm } from "react-hook-form";
 
-export default function Modal({isOpen, setIsOpen}) {
-  
-
+export default function Modal({ isOpen, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);
   }
 
-  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => console.log(data);
 
   return (
     <>
-      
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -51,11 +55,23 @@ export default function Modal({isOpen, setIsOpen}) {
                     Payment successful
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted.
-                      We’ve sent you an email with all of the
-                      details of your order.
-                    </p>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="text" placeholder="First name" {...register("First name", {required: true, maxLength: 80})} />
+      <input type="text" placeholder="Last name" {...register("Last name", {required: true, maxLength: 100})} />
+      <input type="text" placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} />
+      <input type="tel" placeholder="Mobile number" {...register("Mobile number", {required: true, minLength: 6, maxLength: 12})} />
+      <select {...register("Title", { required: true })}>
+        <option value="Mr">Mr</option>
+        <option value="Mrs">Mrs</option>
+        <option value="Miss">Miss</option>
+        <option value="Dr">Dr</option>
+      </select>
+
+      <input {...register("Developer", { required: true })} type="radio" value="Yes" />
+      <input {...register("Developer", { required: true })} type="radio" value="No" />
+
+      <input type="submit" />
+    </form>
                   </div>
 
                   <div className="mt-4">
