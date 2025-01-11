@@ -1,8 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
+import { useDispatch } from "react-redux";
+import { addtask } from "../../features/counter/counterSlice";
 
 const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -10,14 +13,14 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Form Data Submitted:", data);
-    setIsOpen(false); // Close the modal after submission
+    dispatch(addtask(data))
+    setIsOpen(false); 
   };
 
   const assign = [
     { id: 1, name: "Arman Khan" },
     { id: 2, name: "Sumaiya Akter" },
-    { id: 3, name: "Faruk Ahmedy" },
+    { id: 3, name: "Faruk Ahmed" },
     // ...rest of the options
   ];
 
