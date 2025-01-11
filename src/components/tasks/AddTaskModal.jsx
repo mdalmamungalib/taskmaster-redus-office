@@ -17,7 +17,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
   const assign = [
     { id: 1, name: "Arman Khan" },
     { id: 2, name: "Sumaiya Akter" },
-    { id: 3, name: "Faruk Ahmed" },
+    { id: 3, name: "Faruk Ahmedy" },
     // ...rest of the options
   ];
 
