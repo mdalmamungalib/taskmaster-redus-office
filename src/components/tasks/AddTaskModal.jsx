@@ -2,18 +2,20 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
 import { useDispatch } from "react-redux";
-import { addtask } from "../../features/counter/counterSlice";
+import { addtask } from "../../features/counter/taskSlice";
 
 const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    dispatch(addtask(data))
+    dispatch(addtask(data));
+    reset();
     setIsOpen(false); 
   };
 
@@ -146,7 +148,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
           <button
             type="button"
             className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md shadow-sm hover:bg-gray-200 focus:ring-2 focus:ring-gray-300"
-            onClick={() => setIsOpen(false)}
+            onClick={() => (setIsOpen(false), reset())}
           >
             Cancel
           </button>
