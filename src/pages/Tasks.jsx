@@ -12,7 +12,7 @@ const Tasks = () => {
   let [isOpen, setIsOpen] = useState(false);
   const {tasks} = useSelector((state) => state.taskSlice)
   
-  const penddingTasks = tasks.filter((item) => item.status === "pendding");
+  const pendingTasks = tasks.filter((item) => item.status === "pending");
   const runningTasks = tasks.filter((item) => item.status === "running");
   const doneTasks = tasks.filter((item) => item.status === "done");
   return (
@@ -50,11 +50,11 @@ const Tasks = () => {
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
               <h1>Up Next</h1>
               <p className="grid w-6 h-6 text-white rounded-md bg-primary place-content-center">
-                {penddingTasks.length}
+                {pendingTasks.length}
               </p>
             </div>
             <div className="space-y-3">
-              {penddingTasks.map((item) => <TaskCard key={item?.id} task={item}/>)}
+              {pendingTasks.map((item) => <TaskCard key={item?.id} task={item}/>)}
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -70,7 +70,7 @@ const Tasks = () => {
           </div>
           <div className="relative h-[800px] overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-              <h1>Complite</h1>
+              <h1>Complete</h1>
               <p className="grid w-6 h-6 text-white rounded-md bg-primary place-content-center">
                 {doneTasks.length}
               </p>
