@@ -1,6 +1,18 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { statusUpdate } from '../../features/counter/taskSlice';
 
 const TaskCard = ({task}) => {
+  const dispatch = useDispatch();
+console.log(task.status)
+  let updateStatus;
+  if (task.status === "pendding") {
+    updateStatus = "running";
+  } else if (task.status === "running") {
+    updateStatus = "done";
+  } else {
+    updateStatus = "arcive";
+  }
   // const task = {
   //   id: 1,
   //   status: 'pending',
@@ -28,7 +40,7 @@ const TaskCard = ({task}) => {
             <TrashIcon className="h-5 w-5 text-red-500" />
           </button>
           <button
-            
+            onClick={() => dispatch(statusUpdate({id:task.id, status: updateStatus}))}
             title="In progress"
           >
             <ArrowRightIcon className="h-5 w-5 text-primary" />
