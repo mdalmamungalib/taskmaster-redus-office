@@ -27,7 +27,8 @@ console.log(task.status)
   return (
     <div className="bg-secondary/10 rounded-md p-5">
       <h1
-        className={`text-lg font-semibold mb-3  `}
+        className={`text-lg font-semibold mb-3  ${
+          task.priority === "High" ? "text-red-700" : task.priority === "Medium" ? "text-green-600": task.priority === "Low" ? "text-neutral-700" : "" }`}
       >
         {task?.title}
       </h1>
