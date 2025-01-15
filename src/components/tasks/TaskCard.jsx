@@ -3,10 +3,8 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { useDispatch } from "react-redux";
-import {
-  removeTask,
-  statusUpdate,
-} from "../../features/counter/taskSlice";
+import { removeTask, statusUpdate } from "../../Redux/features/task/taskSlice";
+
 
 const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
