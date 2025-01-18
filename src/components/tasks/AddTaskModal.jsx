@@ -24,6 +24,9 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
     { id: 1, name: "Arman Khan" },
     { id: 2, name: "Sumaiya Akter" },
     { id: 3, name: "Faruk Ahmed" },
+    { id: 4, name: "Sam Wilson" },
+    { id: 5, name: "Jane Smith" },
+    { id: 6, name: "John Doe" },
     // ...rest of the options
   ];
 
@@ -113,7 +116,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
             Assign to
           </label>
           <select
-            {...register("assignTo")}
+            {...register("assignedTo")}
             className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           >
             {assign.map((item) => (

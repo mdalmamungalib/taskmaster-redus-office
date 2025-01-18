@@ -4,6 +4,7 @@ import { removeTask, statusUpdate } from "../../Redux/features/task/taskSlice";
 
 const TaskCard = ({ task }) => {
   const dispatch = useDispatch();
+  console.log(task)
 
   // Determine the next status
   const nextStatus =
@@ -14,9 +15,9 @@ const TaskCard = ({ task }) => {
       : "archived";
 
   return (
-    <div className="p-6 rounded-lg bg-gray-100 shadow-sm hover:shadow-md transition-shadow duration-200">
+    <div className="p-6 transition-shadow duration-200 bg-gray-100 rounded-lg shadow-sm hover:shadow-md">
       {/* Task Priority and Title */}
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h1
           className={`text-lg font-semibold ${
             task.priority === "High"
@@ -59,7 +60,7 @@ const TaskCard = ({ task }) => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-between items-center mt-5">
+      <div className="flex items-center justify-between mt-5">
         {/* Status Display */}
         <span
           className={`text-sm font-medium ${
@@ -81,7 +82,7 @@ const TaskCard = ({ task }) => {
           <button
             onClick={() => dispatch(removeTask(task.id))}
             title="Delete Task"
-            className="p-2 bg-red-100 text-red-600 rounded-full hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="p-2 text-red-600 bg-red-100 rounded-full hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500"
           >
             <TrashIcon className="w-5 h-5" />
           </button>
@@ -92,7 +93,7 @@ const TaskCard = ({ task }) => {
               dispatch(statusUpdate({ id: task.id, status: nextStatus }))
             }
             title={`Mark as ${nextStatus}`}
-            className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 text-blue-600 bg-blue-100 rounded-full hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <ArrowRightIcon className="w-5 h-5" />
           </button>

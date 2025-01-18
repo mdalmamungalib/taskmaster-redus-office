@@ -3,26 +3,34 @@ import {
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useDispatch, useSelector } from "react-redux";
-import { statusUpdate } from "../../Redux/features/task/taskSlice";
+import {
+  statusUpdate,
+  userTasks,
+} from "../../Redux/features/task/taskSlice";
 import TaskDetailsModal from "./TaskDetailsModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MyTasks = () => {
   const dispatch = useDispatch();
 
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false);
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
   }
 
-  const { tasks } = useSelector((state) => state.taskSlice);
+  const { tasks, userSpecificTasks } = useSelector((state) => state.taskSlice);
 
+  const { name } = useSelector((state) => state.userSlice);
+  
+  useEffect(() => {
+    dispatch(userTasks(name));
+  }, [name, dispatch, tasks]);
 
   return (
     <div>
       <h1 className="my-3 text-xl">My Tasks</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
-        {tasks.map((item) => (
+        {userSpecificTasks.map((item) => (
           <div
             key={item.id}
             className="flex justify-between p-3 rounded-md bg-secondary/10"
@@ -30,15 +38,23 @@ const MyTasks = () => {
             <h1>{item.title}</h1>
             <div className="flex gap-3">
               <button
-              onClick={openModal}
+                onClick={openModal}
                 className="grid place-content-center"
                 title="Details"
               >
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <TaskDetailsModal setIsOpen={setIsOpen} isOpen={isOpen} item={item}/>
+              <TaskDetailsModal
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+                item={item}
+              />
               <button
-              onClick={()=>dispatch(statusUpdate({id: item?.id, status: "done"})) }
+                onClick={() =>
+                  dispatch(
+                    statusUpdate({ id: item?.id, status: "done" })
+                  )
+                }
                 className="grid place-content-center"
                 title="Done"
               >
