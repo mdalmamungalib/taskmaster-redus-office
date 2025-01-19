@@ -12,22 +12,34 @@ import { useEffect, useState } from "react";
 
 const MyTasks = () => {
   const dispatch = useDispatch();
-
-  let [isOpen, setIsOpen] = useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  const { tasks, userSpecificTasks } = useSelector((state) => state.taskSlice);
-
   const { name } = useSelector((state) => state.userSlice);
-  
+  const { tasks, userSpecificTasks } = useSelector(
+    (state) => state.taskSlice
+  );
+
+  const [taskId, setTaskId] = useState(0);
+  let [isOpen, setIsOpen] = useState(false);
+
+  const handleModal = (id) => {
+    setTaskId(id);
+    setIsOpen(!isOpen);
+  };
+
+  // function openModal() {
+  //   setIsOpen(true);
+  // }
+
   useEffect(() => {
     dispatch(userTasks(name));
   }, [name, dispatch, tasks]);
 
   return (
     <div>
+      <TaskDetailsModal
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+        id={taskId}
+      />
       <h1 className="my-3 text-xl">My Tasks</h1>
       <div className=" h-[750px] overflow-auto space-y-3">
         {userSpecificTasks.map((item) => (
@@ -38,17 +50,13 @@ const MyTasks = () => {
             <h1>{item.title}</h1>
             <div className="flex gap-3">
               <button
-                onClick={openModal}
+                onClick={() => handleModal(item.id)}
                 className="grid place-content-center"
                 title="Details"
               >
                 <DocumentMagnifyingGlassIcon className="w-5 h-5 text-primary" />
               </button>
-              <TaskDetailsModal
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-                item={item}
-              />
+
               <button
                 onClick={() =>
                   dispatch(
