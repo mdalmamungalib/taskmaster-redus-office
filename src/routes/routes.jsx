@@ -1,13 +1,14 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import Tasks from '../pages/Tasks';
-import Chat from '../pages/Chat';
-import Settings from '../pages/Settings';
-import Profile from '../pages/Profile';
-import Archive from '../pages/Archive';
+import { createBrowserRouter } from "react-router-dom";
+import App from "../App";
+import Tasks from "../pages/Tasks";
+import Chat from "../pages/Chat";
+import Settings from "../pages/Settings";
+import Profile from "../pages/Profile";
+import Archive from "../pages/Archive";
+import SignUp from "../components/ui/SignUp";
 const routes = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     children: [
       {
@@ -15,22 +16,26 @@ const routes = createBrowserRouter([
         element: <Tasks />,
       },
       {
-        path:"/archive",
+        path: "/archive",
         element: <Archive />,
       },
       {
-        path: '/chat',
+        path: "/chat",
         element: <Chat />,
       },
       {
-        path: '/settings',
+        path: "/settings",
         element: <Settings />,
       },
       {
-        path: '/profile',
+        path: "/profile",
         element: <Profile />,
       },
     ],
+  },
+  {
+    path: "/signUp",
+    element: <SignUp />,
   },
 ]);
 
