@@ -1,8 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+} from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { createUser } from "../../Redux/features/users/userSlice";
 const SignUp = () => {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -11,14 +18,22 @@ const SignUp = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const togglePasswordVisibility = () =>
+    setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ name, email, password }) => {
+    dispatch(
+      createUser({
+        email,
+        password,
+        name,
+      })
+    );
   };
 
   const password = watch("password");
@@ -40,7 +55,10 @@ const SignUp = () => {
           <h1 className="text-[clamp(1.75rem,5vw,2.5rem)] font-bold text-gray-900 text-center mb-6">
             Create Your Account
           </h1>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-6"
+          >
             {/* Name Field */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
@@ -48,11 +66,15 @@ const SignUp = () => {
               </label>
               <input
                 type="text"
-                {...register("name", { required: "Name is required" })}
+                {...register("name", {
+                  required: "Name is required",
+                })}
                 className="w-full px-4 py-3 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               {errors.name && (
-                <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.name.message}
+                </p>
               )}
             </div>
 
@@ -66,14 +88,17 @@ const SignUp = () => {
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    value:
+                      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                     message: "Invalid email address",
                   },
                 })}
                 className="w-full px-4 py-3 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               {errors.email && (
-                <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -89,7 +114,8 @@ const SignUp = () => {
                     required: "Password is required",
                     minLength: {
                       value: 8,
-                      message: "Password must be at least 8 characters",
+                      message:
+                        "Password must be at least 8 characters",
                     },
                   })}
                   className="w-full px-4 py-3 pr-12 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -99,11 +125,17 @@ const SignUp = () => {
                   className="absolute inset-y-0 flex items-center right-4"
                   onClick={togglePasswordVisibility}
                 >
-                  {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                  {showPassword ? (
+                    <AiOutlineEyeInvisible size={20} />
+                  ) : (
+                    <AiOutlineEye size={20} />
+                  )}
                 </button>
               </div>
               {errors.password && (
-                <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -114,11 +146,17 @@ const SignUp = () => {
               </label>
               <div className="relative">
                 <input
-                  type={showConfirmPassword ? "text" : "password"}
+                  type={
+                    showConfirmPassword
+                      ? "text"
+                      : "password"
+                  }
                   {...register("confirmPassword", {
-                    required: "Confirm Password is required",
+                    required:
+                      "Confirm Password is required",
                     validate: (value) =>
-                      value === password || "Passwords do not match",
+                      value === password ||
+                      "Passwords do not match",
                   })}
                   className="w-full px-4 py-3 pr-12 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
@@ -127,7 +165,11 @@ const SignUp = () => {
                   className="absolute inset-y-0 flex items-center right-4"
                   onClick={toggleConfirmPasswordVisibility}
                 >
-                  {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+                  {showConfirmPassword ? (
+                    <AiOutlineEyeInvisible size={20} />
+                  ) : (
+                    <AiOutlineEye size={20} />
+                  )}
                 </button>
               </div>
               {errors.confirmPassword && (

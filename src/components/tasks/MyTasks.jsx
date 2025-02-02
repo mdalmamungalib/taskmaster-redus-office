@@ -17,6 +17,8 @@ const MyTasks = () => {
     (state) => state.taskSlice
   );
 
+  console.log(userSpecificTasks)
+
   const [taskId, setTaskId] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
 
