@@ -6,6 +6,8 @@ import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import Archive from "../pages/Archive";
 import SignUp from "../components/ui/SignUp";
+import Loading from "../components/ui/Loading";
+import PrivetRoute from "../components/layouts/PrivetRoute";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -13,7 +15,11 @@ const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Tasks />,
+        element: (
+          <PrivetRoute>
+            <Tasks />,
+          </PrivetRoute>
+        ),
       },
       {
         path: "/archive",

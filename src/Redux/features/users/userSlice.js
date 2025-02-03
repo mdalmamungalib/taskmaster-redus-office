@@ -1,7 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
@@ -37,7 +34,15 @@ export const createUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: "useSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, { payload }) => {
+      state.email = payload.email;
+      state.name = payload.name;
+    },
+    toggleLoading: (state, { payload }) => {
+      state.isLoading = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
@@ -47,16 +52,13 @@ export const userSlice = createSlice({
         state.email = "";
         state.name = "";
       })
-      .addCase(
-        createUser.fulfilled,
-        (state, { payload }) => {
-          state.isLoading = false;
-          state.isError = false;
-          state.error = "";
-          state.email = payload.email;
-          state.name = payload.name;
-        }
-      )
+      .addCase(createUser.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.error = "";
+        state.email = payload.email;
+        state.name = payload.name;
+      })
       .addCase(createUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
@@ -66,5 +68,7 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export const { setUser, toggleLoading } = userSlice.actions;
 
 export default userSlice.reducer;
