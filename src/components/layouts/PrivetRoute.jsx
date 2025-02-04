@@ -22,8 +22,8 @@ const PrivetRoute = ({ children }) => {
       if (user) {
         dispatch(
           setUser({
-            email: user.email,
             name: user.displayName,
+            email: user.email,
           })
         );
         dispatch(toggleLoading(false));
