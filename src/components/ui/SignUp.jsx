@@ -1,14 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
 } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../../Redux/features/users/userSlice";
+import toast from "react-hot-toast";
+import Loading from "./Loading";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -20,6 +24,28 @@ const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] =
     useState(false);
+
+  const { isLoading, isError, error, email } = useSelector(
+    (state) => state.userSlice
+  );
+  console.log(email)
+
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    
+  }, [ error ]);
+
+  useEffect(() =>{
+    if (email) {
+      toast.success("Sign-up successful! Redirecting...");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  },[email, navigate])
 
   const togglePasswordVisibility = () =>
     setShowPassword(!showPassword);

@@ -36,7 +36,7 @@ export const createUser = createAsyncThunk(
   }
 );
 export const userSlice = createSlice({
-  name: "userSlice",
+  name: "user",
   initialState,
   reducers: {
     setUser: (state, { payload }) => {
@@ -45,6 +45,10 @@ export const userSlice = createSlice({
     },
     toggleLoading: (state, { payload }) => {
       state.isLoading = payload;
+    },
+    logout: (state) => {
+      state.name = "";
+      state.email = "";
     },
   },
   extraReducers: (builder) => {
@@ -76,6 +80,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUser, toggleLoading } = userSlice.actions;
+export const { setUser, toggleLoading, logout, data } = userSlice.actions;
 
 export default userSlice.reducer;

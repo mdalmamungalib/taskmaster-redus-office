@@ -1,15 +1,26 @@
 import React from "react";
 import { Menu } from "@headlessui/react";
-import { ChevronDownIcon, UserIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ChevronDownIcon,
+  UserIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon,
+} from "@heroicons/react/24/solid";
+import { signOut } from "firebase/auth";
+import { auth } from "../../Firebase/firebase.config";
+import { useDispatch } from "react-redux";
+import { logout } from "../../Redux/features/users/userSlice";
 
 const DropDown = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    signOut(auth);
+    dispatch(logout());
+  };
   return (
     <div className="relative z-10 inline-block text-left">
       <Menu>
-        <Menu.Button
-          className=""
-          aria-label="Profile menu"
-        >
+        <Menu.Button className="" aria-label="Profile menu">
           <div className="w-10 h-10 overflow-hidden bg-gray-600 rounded-full">
             <img
               src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=644&q=80"
@@ -26,7 +37,9 @@ const DropDown = () => {
               {({ active }) => (
                 <button
                   className={`group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm ${
-                    active ? "bg-gray-200 text-gray-700" : "text-gray-700"
+                    active
+                      ? "bg-gray-200 text-gray-700"
+                      : "text-gray-700"
                   }`}
                 >
                   <UserIcon className="w-5 h-5" />
@@ -38,7 +51,9 @@ const DropDown = () => {
               {({ active }) => (
                 <button
                   className={`group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm ${
-                    active ? "bg-gray-200 text-gray-700" : "text-gray-700"
+                    active
+                      ? "bg-gray-200 text-gray-700"
+                      : "text-gray-700"
                   }`}
                 >
                   <Cog6ToothIcon className="w-5 h-5" />
@@ -51,8 +66,11 @@ const DropDown = () => {
             <Menu.Item>
               {({ active }) => (
                 <button
+                  onClick={handleLogout}
                   className={`group flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm ${
-                    active ? "bg-gray-200 text-gray-700" : "text-gray-700"
+                    active
+                      ? "bg-gray-200 text-gray-700"
+                      : "text-gray-700"
                   }`}
                 >
                   <ArrowRightOnRectangleIcon className="w-5 h-5" />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../ui/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addtask } from "../../Redux/features/task/taskSlice";
 
 
@@ -20,6 +20,10 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
     setIsOpen(false); 
   };
 
+  const { name } = useSelector((state) => state.userSlice);
+
+    console.log("user name",name)
+
   const assign = [
     { id: 1, name: "Arman Khan" },
     { id: 2, name: "Sumaiya Akter" },
@@ -28,6 +32,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
     { id: 5, name: "Jane Smith" },
     { id: 6, name: "John Doe" },
     { id: 6, name: "Tad Lopez" },
+    { id: 7, name: name },
     // ...rest of the options
   ];
 
@@ -124,7 +129,7 @@ const AddTaskModal = ({ isOpen, setIsOpen, title }) => {
               <option key={item.id} value={item.name}>
                 {item.name}
               </option>
-            ))}
+            )) }
           </select>
         </div>
 
