@@ -8,9 +8,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../../Redux/features/users/userSlice";
 import toast from "react-hot-toast";
-import Loading from "./Loading";
 import { Link, useNavigate } from "react-router-dom";
-const SignUp = () => {
+import { FcGoogle } from "react-icons/fc";
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,35 +22,26 @@ const SignUp = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
 
-  const { isLoading, isError, error, email } = useSelector(
-    (state) => state.userSlice
-  );
-  console.log(email)
-
+  const { error, email } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
-    
-  }, [ error ]);
+  }, [error]);
 
-  useEffect(() =>{
+  useEffect(() => {
     if (email) {
       toast.success("Sign-up successful! Redirecting...");
       setTimeout(() => {
         navigate("/");
       }, 2000);
     }
-  },[email, navigate])
+  }, [email, navigate]);
 
   const togglePasswordVisibility = () =>
     setShowPassword(!showPassword);
-  const toggleConfirmPasswordVisibility = () =>
-    setShowConfirmPassword(!showConfirmPassword);
 
   const onSubmit = ({ name, email, password }) => {
     dispatch(
@@ -79,31 +70,12 @@ const SignUp = () => {
         {/* Form Section */}
         <div className="w-full p-6 md:w-1/2 lg:w-2/5 sm:p-8 lg:p-12">
           <h1 className="text-[clamp(1.75rem,5vw,2.5rem)] font-bold text-gray-900 text-center mb-6">
-            Create Your Account
+            Login
           </h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-6"
           >
-            {/* Name Field */}
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                type="text"
-                {...register("name", {
-                  required: "Name is required",
-                })}
-                className="w-full px-4 py-3 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-              {errors.name && (
-                <p className="mt-2 text-sm text-red-600">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-
             {/* Email Field */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
@@ -165,64 +137,30 @@ const SignUp = () => {
               )}
             </div>
 
-            {/* Confirm Password Field */}
-            <div className="relative">
-              <label className="block mb-1 text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <div className="relative">
-                <input
-                  type={
-                    showConfirmPassword
-                      ? "text"
-                      : "password"
-                  }
-                  {...register("confirmPassword", {
-                    required:
-                      "Confirm Password is required",
-                    validate: (value) =>
-                      value === password ||
-                      "Passwords do not match",
-                  })}
-                  className="w-full px-4 py-3 pr-12 transition-all border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 flex items-center right-4"
-                  onClick={toggleConfirmPasswordVisibility}
-                >
-                  {showConfirmPassword ? (
-                    <AiOutlineEyeInvisible size={20} />
-                  ) : (
-                    <AiOutlineEye size={20} />
-                  )}
-                </button>
-              </div>
-              {errors.confirmPassword && (
-                <p className="mt-2 text-sm text-red-600">
-                  {errors.confirmPassword.message}
-                </p>
-              )}
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full px-4 py-3 font-semibold text-white transition-all rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
-              Sign Up
+              Login
             </button>
           </form>
 
           {/* Additional Links */}
-          <div className="mt-6 text-sm text-center text-gray-600">
-            Already have an account?{" "}
+          <div className="mt-6 text-sm text-gray-600">
+            Create a new account?{" "}
             <Link
-              to="/login"
+              to="/signUp"
               className="font-semibold text-blue-600 hover:text-blue-500"
             >
-              Log in
+              Sign Up
             </Link>
+          </div>
+          <div className="mt-2">
+            <button className="flex items-center justify-center w-full gap-2 px-4 py-3 font-semibold text-white transition-all rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <span className="text-4xl"><FcGoogle /></span>
+              Login Width Google
+            </button>
           </div>
         </div>
       </div>
@@ -230,4 +168,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;
