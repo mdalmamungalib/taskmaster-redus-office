@@ -10,7 +10,10 @@ import { createUser } from "../../Redux/features/users/userSlice";
 import toast from "react-hot-toast";
 import Loading from "./Loading";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 const SignUp = () => {
+
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,24 +31,22 @@ const SignUp = () => {
   const { isLoading, isError, error, email } = useSelector(
     (state) => state.userSlice
   );
-  console.log(email)
-
+  console.log(email);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
-    
-  }, [ error ]);
+  }, [error]);
 
-  useEffect(() =>{
+  useEffect(() => {
     if (email) {
       toast.success("Sign-up successful! Redirecting...");
       setTimeout(() => {
         navigate("/");
       }, 2000);
     }
-  },[email, navigate])
+  }, [email, navigate]);
 
   const togglePasswordVisibility = () =>
     setShowPassword(!showPassword);
@@ -172,14 +173,9 @@ const SignUp = () => {
               </label>
               <div className="relative">
                 <input
-                  type={
-                    showConfirmPassword
-                      ? "text"
-                      : "password"
-                  }
+                  type={showConfirmPassword ? "text" : "password"}
                   {...register("confirmPassword", {
-                    required:
-                      "Confirm Password is required",
+                    required: "Confirm Password is required",
                     validate: (value) =>
                       value === password ||
                       "Passwords do not match",
