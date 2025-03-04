@@ -18,7 +18,7 @@ const baseApi = createApi({
   }),
   endpoints: (builder) => ({
     getTasks: builder.query({
-      query: () => "/task/tasks", // Match your backend endpoint here
+      query: () => "/task/tasks",
       transformResponse: (response) => {
         if (typeof response === "string" && response.startsWith("<!DOCTYPE html>")) {
           throw new Error("Received HTML instead of JSON. Check API endpoint.");

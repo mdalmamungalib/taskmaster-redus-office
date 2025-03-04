@@ -6,7 +6,7 @@ import baseApi from "./features/api/baseApi";
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
-    taskSlice: taskReducer, // Correctly use the default export
+    taskSlice: taskReducer, 
     userSlice: userReducer,
   },
 

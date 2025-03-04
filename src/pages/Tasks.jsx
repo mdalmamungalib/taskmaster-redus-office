@@ -12,11 +12,16 @@ import { useGetTasksQuery } from "../Redux/features/api/baseApi";
 const Tasks = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data: tasks, isLoading, isError } = useGetTasksQuery();
+  console.log(tasks,"data");
+  console.log(isError,"isError");
 
   // Handle API loading and errors
   if (isLoading) {
     return <div className="flex items-center justify-center h-screen">Loading tasks...</div>;
   }
+  
+  
+  if (isError) return <p>Error fetching tasks: {isError.message}</p>;
   
   // if (isError) {
   //   return <div className="mt-10 text-center text-red-500">Failed to load tasks. Please try again later.</div>;
